@@ -1,0 +1,24 @@
+{
+  "author": "Jeremy Battle <@complexcarb> (http://jeremybattle.com)",
+  "name": "express-force-ssl",
+  "description": "Force SSL on particular/all pages in Express",
+  "version": "0.1.0",
+  "homepage": "http://github.com/battlejj/express-force-ssl",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/battlejj/express-force-ssl.git"
+  },
+  "contributors": [
+  ],
+  "keywords" : ["ssl", "secure", "https", "tls", "middleware", "cert", "require", "express"],
+  "dependencies": {
+  },
+  "main" : "index",
+  "bugs" : { "url" : "http://github.com/battlejj/express-force-ssl/issues" },
+  "scripts": { },
+  "engines": { "node": ">=0.2.2" },
+  "licenses" : [{
+    "type" : "MIT",
+    "url" : "http://github.com/battlejj/express-force-ssl/raw/master/LICENSE"
+  }]
+}
