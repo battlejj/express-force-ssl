@@ -2,13 +2,20 @@
   "author": "Jeremy Battle <@complexcarb> (http://jeremybattle.com)",
   "name": "express-force-ssl",
   "description": "Force SSL on particular/all pages in Express",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "http://github.com/battlejj/express-force-ssl",
   "repository": {
     "type": "git",
     "url": "git://github.com/battlejj/express-force-ssl.git"
   },
-  "contributors": [
+  "contributors": [{
+    "name": "Jeremy Battle",
+    "email": "battlejj@gmail.com"
+  },
+  {
+    "name": "Tim Shadel",
+    "github": "https://github.com/timshadel"
+  }
   ],
   "keywords" : ["ssl", "secure", "https", "tls", "middleware", "cert", "require", "express"],
   "dependencies": {

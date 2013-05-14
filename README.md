@@ -5,6 +5,9 @@ express-force-ssl
 Extremely simple middleware for requiring some or all pages
 to be visited over SSL.
 
+####
+v0.1.1 - Bug fix; thanks Tim!
+
 
 ####Possible uses
 #####All pages SSL
