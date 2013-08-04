@@ -26,7 +26,7 @@ server = http.createServer(app)
 
 app = express()
 app.use express.bodyParser()
-app.use sslRequirement
+app.use forceSSL
 app.use app.router
 
 
