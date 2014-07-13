@@ -10,7 +10,7 @@ For example, if you host your non-ssl site on port 8080 and your secure site on 
 Now, out of the box your non-ssl site port will be recognized, and to specify a port other than 443 for your ssl port
 you just have to add a setting in your express config like so:
 ````javascript
-app.use('httpsPort', 8443);
+app.set('httpsPort', 8443);
 ````
 and the plugin will check for it and use it. Defaults to 443 of course.
 
