@@ -1,9 +1,13 @@
 express-force-ssl
 =================
-####Only tested on express 3.x
+####Works on express 3.x, 4.x
 
 Extremely simple middleware for requiring some or all pages
 to be visited over SSL.
+
+####v0.2.2 - Redirect now gives a 301 permanent redirection HTTP Status Code
+Courtesy of @tixz 
+
 ####v0.2.0 - Added support for ports other than 80/443 for non-secure/secure ports.
 
 For example, if you host your non-ssl site on port 8080 and your secure site on 8443, version 0.1.x did not support it.
