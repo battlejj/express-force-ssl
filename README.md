@@ -104,4 +104,4 @@ app.set('httpsPort', 8443);
 and the plugin will check for it and use it. Defaults to 443 of course.
 
 #####v0.1.1 - Bug fix
-Curteousy of @timshadel
+Courtesy of @timshadel
