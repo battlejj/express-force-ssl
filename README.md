@@ -29,7 +29,6 @@ var app = express();
 var server = http.createServer(app);
 var secureServer = https.createServer(ssl_options, app);
 
-
 app.use(express.bodyParser());
 app.use(forceSSL);
 app.use(app.router);
