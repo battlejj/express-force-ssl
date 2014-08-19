@@ -39,7 +39,7 @@ server.listen(80)
 
 ```
 
-#####Only certain pages SSL
+######Only certain pages SSL
 ```javascript
 var express = require('express');
 var forceSSL = require('express-force-ssl');
@@ -70,7 +70,7 @@ secureServer.listen(443)
 server.listen(80)
 ```
 
-####Custom Server Port Support
+######Custom Server Port Support
 If your server isn't listening on 80/443 respectively, you can change this pretty simply. 
 
 ```javascript
