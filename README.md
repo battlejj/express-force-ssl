@@ -86,7 +86,9 @@ secureServer.listen(443)
 server.listen(80)
 
 ```
-
+###Change Log
+#####v0.2.4 - Now also checking X-Forwarded-Proto header to determine SSL connection
+Courtesy of @ronco
 
 ###Change Log
 #####v0.2.3 - Update README
