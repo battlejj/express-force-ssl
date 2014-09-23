@@ -3,8 +3,8 @@ var isSecure = function(req) {
   if (req.secure) {
     return true;
   } else if (
-    typeof req.get('X-Forwarded-Proto') !== 'undefined' &&
-    typeof req.get('X-Forwarded-Proto').toLowerCase !== 'undefined' &&
+    req.get('X-Forwarded-Proto') &&
+    req.get('X-Forwarded-Proto').toLowerCase &&
     req.get('X-Forwarded-Proto').toLowerCase() === 'https'
     ) {
     return true;
