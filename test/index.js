@@ -54,50 +54,5 @@ describe('Test SSL Redirect', function(){
       done();
     });
   });
-
-  it('Should not redirect to SSL if X-Forwarded-Proto header exists and equals https.', function(done){
-    request.get({
-      url: 'http://localhost:8080/ssl',
-      followRedirect: false,
-      strictSSL: false,
-      headers: {
-        'X-Forwarded-Proto': 'https'
-      }
-    }, function (error, response, body) {
-      expect(error).to.not.exist;
-      expect(response.statusCode).to.equal(200);
-      done();
-    });
-  });
-
-  it('Should not redirect to SSL if X-Forwarded-Proto header exists and equals HTTPS.', function(done){
-    request.get({
-      url: 'http://localhost:8080/ssl',
-      followRedirect: false,
-      strictSSL: false,
-      headers: {
-        'X-Forwarded-Proto': 'https'
-      }
-    }, function (error, response, body) {
-      expect(error).to.not.exist;
-      expect(response.statusCode).to.equal(200);
-      done();
-    });
-  });
-
-  it('Should redirect to SSL if X-Forwarded-Proto header exists and is not an insensitive value of HTTPS.', function(done){
-    request.get({
-      url: 'http://localhost:8080/ssl',
-      followRedirect: false,
-      strictSSL: false,
-      headers: {
-        'X-Forwarded-Proto': 'something-else'
-      }
-    }, function (error, response, body) {
-      expect(error).to.not.exist;
-      expect(response.statusCode).to.equal(301);
-      done();
-    });
-  });
 });
 
