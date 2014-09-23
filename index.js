@@ -2,7 +2,11 @@ var parseUrl = require('url').parse;
 var isSecure = function(req) {
   if (req.secure) {
     return true;
-  } else if (req.get('X-Forwarded-Proto').toLowerCase() === 'https') {
+  } else if (
+    typeof req.get('X-Forwarded-Proto') !== 'undefined' &&
+    typeof req.get('X-Forwarded-Proto').toLowerCase !== 'undefined' &&
+    req.get('X-Forwarded-Proto').toLowerCase() === 'https'
+    ) {
     return true;
   }
   return false;
