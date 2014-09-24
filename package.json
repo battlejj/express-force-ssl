@@ -2,7 +2,7 @@
   "author": "Jeremy Battle <@complexcarb> (http://jeremybattle.com)",
   "name": "express-force-ssl",
   "description": "Force SSL on particular/all pages in Express",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "scripts": {},
   "homepage": "http://github.com/battlejj/express-force-ssl",
   "repository": {
@@ -44,7 +44,6 @@
     }
   ],
   "devDependencies": {
-    "body-parser": "^1.8.3",
     "chai": "^1.9.1",
     "express": "^4.9.4",
     "mocha": "^1.21.4",

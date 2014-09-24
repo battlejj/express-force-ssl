@@ -86,7 +86,15 @@ secureServer.listen(443)
 server.listen(80)
 
 ```
+
+######Test
+```
+npm test
+```
+
 ###Change Log
+
+#####v0.2.6 - Added Tests
 
 #####v0.2.5 - Bug Fix
 
