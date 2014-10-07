@@ -3,7 +3,6 @@ var express = require('express')
   , fs = require('fs')
   , http = require('http')
   , https = require('https')
-  , request = require('request')
   ;
 
 var ssl_options = {

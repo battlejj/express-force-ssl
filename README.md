@@ -94,6 +94,8 @@ npm test
 
 ###Change Log
 
+#####v0.2.7 - Additional Test cases. Added example server.
+
 #####v0.2.6 - Added Tests
 
 #####v0.2.5 - Bug Fix
