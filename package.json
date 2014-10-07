@@ -3,7 +3,9 @@
   "name": "express-force-ssl",
   "description": "Force SSL on particular/all pages in Express",
   "version": "0.2.6",
-  "scripts": {},
+  "scripts": {
+    "test": "mocha test"
+  },
   "homepage": "http://github.com/battlejj/express-force-ssl",
   "repository": {
     "type": "git",
