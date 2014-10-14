@@ -1,4 +1,5 @@
-var chai = require('chai')
+var bodyParser = require('body-parser')
+  , chai = require('chai')
   , expect = chai.expect
   , express = require('express')
   , forceSSL = require('../index')
@@ -15,6 +16,8 @@ var ssl_options = {
 };
 
 var app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 var server = http.createServer(app);
 var secureServer = https.createServer(ssl_options, app);
 
@@ -29,6 +32,10 @@ app.get('/ssl/deep/route/:id', forceSSL, function(req, res){
   var host = req.headers.host.split(':');
   var port = host.length > 1 ? host[1] : 'default port';
   res.json({msg: 'only https, port: ' + port, id: req.param('id')});
+});
+
+app.post('/sslpost', forceSSL, function(req, res){
+  res.json(req.body);
 });
 
 app.set('httpsPort', 8443);
@@ -133,6 +140,68 @@ describe('Test SSL Redirect', function(){
     }, function (error, response, body) {
       expect(error).to.not.exist;
       expect(response.statusCode).to.equal(301);
+      done();
+    });
+  });
+
+  it('Should fail to post data over http.', function(done){
+    var testData = {key: 'value'};
+    request.post({
+      url: 'http://localhost:8080/sslpost',
+      form: testData,
+      followRedirect: true,
+      strictSSL: false
+    }, function (error, response, body) {
+      expect(response.statusCode).to.equal(403);
+      expect(body).to.equal('SSL Required.');
+      done();
+    });
+  });
+
+  it('Should succeed posting data over http.', function(done){
+    var testData = {key: 'value'};
+    request.post({
+      url: 'https://localhost:8443/sslpost',
+      form: testData,
+      followRedirect: true,
+      strictSSL: false
+    }, function (error, response, body) {
+      expect(response.statusCode).to.equal(200);
+      expect(JSON.stringify(testData)).to.equal(body);
+      done();
+    });
+  });
+
+  it('Should succeed in posting data to SSL if X-Forwarded-Proto header exists and equals HTTPS.', function(done){
+    var testData = {key: 'value'};
+    request.post({
+      url: 'http://localhost:8080/sslpost',
+      form: testData,
+      followRedirect: false,
+      strictSSL: false,
+      headers: {
+        'X-Forwarded-Proto': 'https'
+      }
+    }, function (error, response, body) {
+      expect(response.statusCode).to.equal(200);
+      expect(JSON.stringify(testData)).to.equal(body);
+      done();
+    });
+  });
+
+  it('Should fail in posting data to SSL if X-Forwarded-Proto header exists and not equal to HTTPS.', function(done){
+    var testData = {key: 'value'};
+    request.post({
+      url: 'http://localhost:8080/sslpost',
+      form: testData,
+      followRedirect: false,
+      strictSSL: false,
+      headers: {
+        'X-Forwarded-Proto': 'something-else'
+      }
+    }, function (error, response, body) {
+      expect(response.statusCode).to.equal(403);
+      expect(body).to.equal('SSL Required.');
       done();
     });
   });

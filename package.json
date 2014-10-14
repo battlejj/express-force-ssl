@@ -2,7 +2,7 @@
   "author": "Jeremy Battle <@complexcarb> (http://jeremybattle.com)",
   "name": "express-force-ssl",
   "description": "Force SSL on particular/all pages in Express",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "scripts": {
     "test": "mocha test"
   },
@@ -15,10 +15,6 @@
     {
       "name": "Jeremy Battle",
       "email": "battlejj@gmail.com"
-    },
-    {
-      "name": "Tim Shadel",
-      "github": "https://github.com/timshadel"
     }
   ],
   "keywords": [
@@ -46,6 +42,7 @@
     }
   ],
   "devDependencies": {
+    "body-parser": "^1.9.0",
     "chai": "^1.9.1",
     "express": "^4.9.4",
     "mocha": "^1.21.4",
