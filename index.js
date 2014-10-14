@@ -10,13 +10,17 @@ var isSecure = function(req) {
     return true;
   }
   return false;
-}
+};
 exports = module.exports = function(req, res, next){
   if(!isSecure(req)){
-    var httpsPort = req.app.get('httpsPort') || 443;
-    var fullUrl = parseUrl('http://' + req.header('Host') + req.url);
-    res.redirect(301, 'https://' + fullUrl.hostname + ':' + httpsPort + req.url);
+    if(req.method === "GET"){
+      var httpsPort = req.app.get('httpsPort') || 443;
+      var fullUrl = parseUrl('http://' + req.header('Host') + req.url);
+      res.redirect(301, 'https://' + fullUrl.hostname + ':' + httpsPort + req.url);
+    } else {
+      res.status(403).send('SSL Required.');
+    }
   } else {
     next();
   }
-}
+};
