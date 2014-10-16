@@ -19,12 +19,8 @@
   ],
   "keywords": [
     "ssl",
-    "secure",
-    "https",
     "tls",
-    "middleware",
-    "cert",
-    "require",
+    "https",
     "express"
   ],
   "dependencies": {},
