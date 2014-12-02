@@ -93,8 +93,6 @@ npm test
 ```
 
 ###Change Log
-#####v0.2.9 - More modular tests.
-
 #####v0.2.8 - Now sends 403 SSL Required error when HTTP method is anything but GET.
 This will prevent a POST/PUT etc with data that will end up being lost in a redirect.
 
