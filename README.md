@@ -100,6 +100,9 @@ npm test
 
 Change Log
 ==========
+v0.2.10 - Updated README for npmjs.com markdown changes
+-------
+
 v0.2.9 - More modular tests.
 ------
 
