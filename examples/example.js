@@ -18,11 +18,11 @@ var secureServer = https.createServer(ssl_options, app);
 app.get('/', function(req, res){
   res.json({msg: 'accessible by http'});
 });
-app.get('/ssl', forceSSL, function(req, res){
+app.get('/ssl', forceSSL(), function(req, res){
   res.json({msg: 'only https'});
 });
 
-app.get('/ssl/deep/route/:id', forceSSL, function(req, res){
+app.get('/ssl/deep/route/:id', forceSSL(), function(req, res){
   var host = req.headers.host.split(':');
   var port = host.length > 1 ? host[1] : 'default port';
   res.json({msg: 'only https, port: ' + port, id: req.param('id')});
