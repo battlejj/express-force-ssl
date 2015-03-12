@@ -33,7 +33,7 @@ var server = http.createServer(app);
 var secureServer = https.createServer(ssl_options, app);
 
 app.use(express.bodyParser());
-app.use(forceSSL);
+app.use(forceSSL());
 app.use(app.router);
 
 secureServer.listen(443)
@@ -66,8 +66,8 @@ app.use(app.router);
 
 app.get('/', somePublicFunction);
 app.get('/user/:name', somePublicFunction);
-app.get('/login', forceSSL, someSecureFunction);
-app.get('/logout', forceSSL, someSecureFunction);
+app.get('/login', forceSSL(), someSecureFunction);
+app.get('/logout', forceSSL(), someSecureFunction);
 
 secureServer.listen(443)
 server.listen(80)
@@ -75,7 +75,7 @@ server.listen(80)
 
 Custom Server Port Support
 --------------------------
-If your server isn't listening on 80/443 respectively, you can change this pretty simply. 
+If your server isn't listening on 80/443 respectively, you can change this pretty simply.
 
 ```javascript
 

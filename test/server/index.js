@@ -29,11 +29,11 @@ module.exports = (function() {
     res.send('HTTP and HTTPS.');
   });
 
-  app.get('/ssl', forceSSL, function (req, res) {
+  app.get('/ssl', forceSSL(), function (req, res) {
     res.send('HTTPS only.');
   });
 
-  app.get('/ssl/nested/route/:id', forceSSL, function (req, res) {
+  app.get('/ssl/nested/route/:id', forceSSL(), function (req, res) {
     var host = req.headers.host.split(':');
     var port = host.length > 1 ? host[1] : 'default port';
     res.send('HTTPS Only. Port: ' + port + '. Got param of ' + req.param('id') + '.');
@@ -43,7 +43,7 @@ module.exports = (function() {
     res.json(req.body);
   });
 
-  app.post('/sslEcho', forceSSL, function (req, res) {
+  app.post('/sslEcho', forceSSL(), function (req, res) {
     res.json(req.body);
   });
 
@@ -58,4 +58,3 @@ module.exports = (function() {
     app: app
   };
 })();
-
