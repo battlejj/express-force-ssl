@@ -23,7 +23,9 @@
     "https",
     "express"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "underscore": "~1.8.2"
+  },
   "main": "index",
   "bugs": {
     "url": "http://github.com/battlejj/express-force-ssl/issues"
