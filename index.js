@@ -15,7 +15,7 @@ exports = module.exports = function(req, res, next){
   if(!isSecure(req)){
     if(req.method === "GET"){
       var httpsPort = req.app.get('httpsPort') || 443;
-      var fullUrl = parseUrl('http://' + req.header('Host') + req.url);
+      var fullUrl = parseUrl(req.protocol + '://' + req.header('Host') + req.originalUrl);
       res.redirect(301, 'https://' + fullUrl.hostname + ':' + httpsPort + req.url);
     } else {
       res.status(403).send('SSL Required.');
