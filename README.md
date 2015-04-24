@@ -100,6 +100,8 @@ npm test
 
 Change Log
 ==========
+**v0.2.12** - Bug Fix
+
 **v0.2.11** - Updated README to fix usage example typo and formatting fixes
 
 **v0.2.10** - Updated README for npmjs.com markdown changes
