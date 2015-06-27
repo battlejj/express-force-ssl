@@ -100,6 +100,8 @@ npm test
 
 Change Log
 ==========
+**v0.2.13** - Bug Fix, thanks @tatepostnikoff
+
 **v0.2.12** - Bug Fix
 
 **v0.2.11** - Updated README to fix usage example typo and formatting fixes
