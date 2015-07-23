@@ -1,6 +1,10 @@
+var httpsPort = 8443;
+var defaultSSLPort =  443;
 var bodyParser = require('body-parser')
   , express = require('express')
-  , forceSSL = require('../../index')
+  , getForceSSL = require('../../index')
+  , forceSSL = getForceSSL({ port: httpsPort })
+  , forceSSLDefaultPort = getForceSSL({ port: defaultSSLPort })
   , fs = require('fs')
   , http = require('http')
   , https = require('https')
@@ -21,6 +25,7 @@ module.exports = (function() {
 
   var server = http.createServer(app);
   var secureServer = https.createServer(ssl_options, app);
+  var secureServerWithDefaultPort = https.createServer(ssl_options, app);
 
   /*
    Routes
@@ -33,10 +38,14 @@ module.exports = (function() {
     res.send('HTTPS only.');
   });
 
+  app.get('/sslDefaultPort', forceSSLDefaultPort, function (req, res) {
+    res.send('HTTPS only.');
+  });
+
   app.get('/ssl/nested/route/:id', forceSSL, function (req, res) {
     var host = req.headers.host.split(':');
     var port = host.length > 1 ? host[1] : 'default port';
-    res.send('HTTPS Only. Port: ' + port + '. Got param of ' + req.param('id') + '.');
+    res.send('HTTPS Only. Port: ' + port + '. Got param of ' + req.params.id + '.');
   });
 
   app.post('/echo', function (req, res) {
@@ -47,15 +56,15 @@ module.exports = (function() {
     res.json(req.body);
   });
 
-  app.set('httpsPort', 8443);
-
-  secureServer.listen(8443);
   server.listen(8080);
+  secureServer.listen(httpsPort);
+  secureServerWithDefaultPort.listen(defaultSSLPort);
 
   return {
-    secureServer: secureServer,
+    app: app,
     server: server,
-    app: app
+    secureServer: secureServer,
+    secureServerWithDefaultPort: secureServerWithDefaultPort,
   };
 })();
 

@@ -6,6 +6,7 @@ var chai = require('chai')
 
 var baseurl = 'http://localhost:8080';
 var secureBaseurl = 'https://localhost:8443';
+var secureBaseurlDefaultPort = 'https://localhost';
 var SSLRequiredErrorText = 'SSL Required.';
 
 describe('Test standard HTTP behavior.', function(){
@@ -42,6 +43,38 @@ describe('Test standard HTTP behavior.', function(){
   it('Should end up at secure endpoint on "SSL Only" endpoint.', function(done){
     var originalDestination = baseurl + '/ssl';
     var expectedDestination = secureBaseurl + '/ssl';
+    request.get({
+      url: originalDestination,
+      followRedirect: true,
+      strictSSL: false
+    }, function (error, response, body){
+      //noinspection BadExpressionStatementJS
+      expect(error).to.not.exist;
+      expect(response.statusCode).to.equal(200);
+      expect(response.request.uri.href).to.equal(expectedDestination);
+      done();
+    });
+  });
+
+  it('Should receive a 301 redirect on "SSL Only" endpoint (default SSL port).', function(done){
+    var originalDestination = baseurl + '/sslDefaultPort';
+    var expectedDestination = secureBaseurlDefaultPort + '/sslDefaultPort';
+    request.get({
+      url: originalDestination,
+      followRedirect: false,
+      strictSSL: false
+    }, function (error, response, body){
+      //noinspection BadExpressionStatementJS
+      expect(error).to.not.exist;
+      expect(response.statusCode).to.equal(301);
+      expect(response.headers.location).to.equal(expectedDestination);
+      done();
+    });
+  });
+
+  it('Should end up at secure endpoint on "SSL Only" endpoint (default SSL port).', function(done){
+    var originalDestination = baseurl + '/sslDefaultPort';
+    var expectedDestination = secureBaseurlDefaultPort + '/sslDefaultPort';
     request.get({
       url: originalDestination,
       followRedirect: true,
