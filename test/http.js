@@ -6,7 +6,9 @@ var chai = require('chai')
 
 var baseurl = 'http://localhost:8080';
 var secureBaseurl = 'https://localhost:8443';
+var secureBaseurlDefaultPort = 'https://localhost';
 var SSLRequiredErrorText = 'SSL Required.';
+var SSLRequiredCustomErrorText = 'Oh noes, y u got no SSL?';
 
 describe('Test standard HTTP behavior.', function(){
 
@@ -42,6 +44,38 @@ describe('Test standard HTTP behavior.', function(){
   it('Should end up at secure endpoint on "SSL Only" endpoint.', function(done){
     var originalDestination = baseurl + '/ssl';
     var expectedDestination = secureBaseurl + '/ssl';
+    request.get({
+      url: originalDestination,
+      followRedirect: true,
+      strictSSL: false
+    }, function (error, response, body){
+      //noinspection BadExpressionStatementJS
+      expect(error).to.not.exist;
+      expect(response.statusCode).to.equal(200);
+      expect(response.request.uri.href).to.equal(expectedDestination);
+      done();
+    });
+  });
+
+  it('Should receive a 301 redirect on "SSL Only" endpoint (default SSL port).', function(done){
+    var originalDestination = baseurl + '/sslDefaultPort';
+    var expectedDestination = secureBaseurlDefaultPort + '/sslDefaultPort';
+    request.get({
+      url: originalDestination,
+      followRedirect: false,
+      strictSSL: false
+    }, function (error, response, body){
+      //noinspection BadExpressionStatementJS
+      expect(error).to.not.exist;
+      expect(response.statusCode).to.equal(301);
+      expect(response.headers.location).to.equal(expectedDestination);
+      done();
+    });
+  });
+
+  it('Should end up at secure endpoint on "SSL Only" endpoint (default SSL port).', function(done){
+    var originalDestination = baseurl + '/sslDefaultPort';
+    var expectedDestination = secureBaseurlDefaultPort + '/sslDefaultPort';
     request.get({
       url: originalDestination,
       followRedirect: true,
@@ -127,6 +161,24 @@ describe('Test standard HTTP behavior.', function(){
       expect(response.statusCode).to.equal(403);
       expect(response.request.uri.href).to.equal(destination);
       expect(body).to.equal(SSLRequiredErrorText);
+      done();
+    });
+  });
+
+  it('Should receive 403 error with a custom error message when POSTing data to "SSL Only" endpoint.', function(done){
+    var destination = baseurl + '/customReponse';
+    var postData = { key1: 'Keyboard.', key2: 'Cat.'};
+    request.post({
+      url: destination,
+      followRedirect: true,
+      strictSSL: false,
+      form: postData
+    }, function(error, response, body){
+      //noinspection BadExpressionStatementJS
+      expect(error).to.not.exist;
+      expect(response.statusCode).to.equal(403);
+      expect(response.request.uri.href).to.equal(destination);
+      expect(body).to.equal(SSLRequiredCustomErrorText);
       done();
     });
   });

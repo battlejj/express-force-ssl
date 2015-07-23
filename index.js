@@ -1,26 +1,48 @@
-var parseUrl = require('url').parse;
-var isSecure = function(req) {
+'use strict';
+
+var defaultSSLPort = 443;
+var defaultErrorResponse = 'SSL Required.';
+
+
+function isSecure(req) {
   if (req.secure) {
     return true;
-  } else if (
-    req.get('X-Forwarded-Proto') &&
-    req.get('X-Forwarded-Proto').toLowerCase &&
-    req.get('X-Forwarded-Proto').toLowerCase() === 'https'
-    ) {
+  }
+
+  var forwardedProto = req.get('X-Forwarded-Proto');
+
+  if (forwardedProto &&
+      forwardedProto.toLowerCase &&
+      forwardedProto.toLowerCase() === 'https') {
     return true;
   }
+
   return false;
-};
-exports = module.exports = function(req, res, next){
-  if(!isSecure(req)){
-    if(req.method === "GET"){
-      var httpsPort = req.app.get('httpsPort') || 443;
-      var fullUrl = parseUrl(req.protocol + '://' + req.header('Host') + req.originalUrl);
-      res.redirect(301, 'https://' + fullUrl.hostname + ':' + httpsPort + req.originalUrl);
-    } else {
-      res.status(403).send('SSL Required.');
-    }
-  } else {
-    next();
+}
+
+
+module.exports = function getForceSSL(options) {
+  options = options || {};
+
+  var portPart = '';
+
+  if (options.port &&
+      options.port !== defaultSSLPort) {
+    portPart = ':' + options.port;
   }
+
+  var errorResponse = options.errorResponse || defaultErrorResponse;
+
+  return function forceSSL(req, res, next) {
+    if (isSecure(req)) {
+      return next();
+    }
+
+    if (req.method !== 'GET') {
+      res.status(403).send(errorResponse);
+      return;
+    }
+
+    res.redirect(301, 'https://' + req.hostname + portPart + req.originalUrl);
+  };
 };
