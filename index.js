@@ -22,6 +22,8 @@ function isSecure(req) {
 
 
 module.exports = function getForceSSL(options) {
+  options = options || {};
+
   var portPart = '';
 
   if (options.port &&
