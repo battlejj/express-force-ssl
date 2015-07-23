@@ -8,6 +8,7 @@ var baseurl = 'http://localhost:8080';
 var secureBaseurl = 'https://localhost:8443';
 var secureBaseurlDefaultPort = 'https://localhost';
 var SSLRequiredErrorText = 'SSL Required.';
+var SSLRequiredCustomErrorText = 'Oh noes, y u got no SSL?';
 
 describe('Test standard HTTP behavior.', function(){
 
@@ -160,6 +161,24 @@ describe('Test standard HTTP behavior.', function(){
       expect(response.statusCode).to.equal(403);
       expect(response.request.uri.href).to.equal(destination);
       expect(body).to.equal(SSLRequiredErrorText);
+      done();
+    });
+  });
+
+  it('Should receive 403 error with a custom error message when POSTing data to "SSL Only" endpoint.', function(done){
+    var destination = baseurl + '/customReponse';
+    var postData = { key1: 'Keyboard.', key2: 'Cat.'};
+    request.post({
+      url: destination,
+      followRedirect: true,
+      strictSSL: false,
+      form: postData
+    }, function(error, response, body){
+      //noinspection BadExpressionStatementJS
+      expect(error).to.not.exist;
+      expect(response.statusCode).to.equal(403);
+      expect(response.request.uri.href).to.equal(destination);
+      expect(body).to.equal(SSLRequiredCustomErrorText);
       done();
     });
   });

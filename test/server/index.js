@@ -1,10 +1,13 @@
 var httpsPort = 8443;
 var defaultSSLPort =  443;
+var customReponse = 'Oh noes, y u got no SSL?';
+
 var bodyParser = require('body-parser')
   , express = require('express')
   , getForceSSL = require('../../index')
   , forceSSL = getForceSSL({ port: httpsPort })
   , forceSSLDefaultPort = getForceSSL({ port: defaultSSLPort })
+  , forceSSLCustomResponse = getForceSSL({ errorResponse: customReponse })
   , fs = require('fs')
   , http = require('http')
   , https = require('https')
@@ -54,6 +57,10 @@ module.exports = (function() {
 
   app.post('/sslEcho', forceSSL, function (req, res) {
     res.json(req.body);
+  });
+
+  app.post('/customReponse', forceSSLCustomResponse, function (req, res) {
+    res.send('HTTPS only.');
   });
 
   server.listen(8080);
