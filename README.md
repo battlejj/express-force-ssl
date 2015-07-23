@@ -17,7 +17,7 @@ Force SSL on all pages
 ----------------------
 ```javascript
 var express = require('express');
-var forceSSL = require('express-force-ssl');
+var forceSSL = require('express-force-ssl')();
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
@@ -38,14 +38,13 @@ app.use(app.router);
 
 secureServer.listen(443)
 server.listen(80)
-
 ```
 
 Only certain pages SSL
 ----------------------
 ```javascript
 var express = require('express');
-var forceSSL = require('express-force-ssl');
+var forceSSL = require('express-force-ssl')();
 var fs = require('fs');
 var http = require('http');
 var https = require('https');
@@ -75,21 +74,28 @@ server.listen(80)
 
 Custom Server Port Support
 --------------------------
-If your server isn't listening on 80/443 respectively, you can change this pretty simply. 
+If your server isn't listening on 80/443 respectively, you can change this pretty simply.
 
 ```javascript
+var forceSSL = require('express-force-ssl')({ port: 8443 });
 
 var app = express();
-app.set('httpsPort', 8443);
 
 var server = http.createServer(app);
 var secureServer = https.createServer(ssl_options, app);
 
 ...
 
-secureServer.listen(443)
+secureServer.listen(8443)
 server.listen(80)
+```
 
+Custom Error Response
+--------------------------
+You can change the default 403 response message by setting the `errorResponse` option like so:
+
+```javascript
+var forceSSL = require('express-force-ssl')({ errorResponse: 'SSL really required.' });
 ```
 
 Test
