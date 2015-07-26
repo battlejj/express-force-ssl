@@ -10,6 +10,59 @@ Installation
 $ npm install express-force-ssl
 ````
 
+Configuration
+=============
+As of v0.3.0 there are some configuration options
+-------------------------------------------------
+
+*NEW Settings Option*
+```javascript
+app.set('forceSSLOptions', {
+  enable301Redirects: true,
+  trustXFPHeader: false,
+  httpsPort: 443
+});
+```
+
+
+*enable301Redirects* - Defaults to ***true*** - the normal behavior is to 301 redirect GET requests to the https version of a
+website. Changing this value to ***false*** will cause even GET requests to 403 SSL Required errors.
+
+*trustXFPHeader* - Defaults to ***false*** - this behavior is NEW and will be default NOT TRUST X-Forwarded-Proto which
+could allow a client to spoof whether or not they were on HTTPS or not. This can be changed to ***true*** if you are
+behind a proxy where you trust the X-Forwarded-Proto header.
+
+*httpsPort* - Previous this value was set with app.set('httpsPort', <portNumber>). This value should now be set in
+the forceSSLOptions setting.
+
+Per-Route SSL Settings are now possible
+---------------------------------------
+Settings in your forceSSLOptions configuration will act as default settings for your app. However, these values can
+be overridden by setting *res.locals* values before the the express-force-ssl middleware is run. For example:
+
+```javascript
+app.set('forceSSLOptions', {
+  enable301Redirects: false
+});
+
+app.get('/', forceSSL, function (req, res) {
+  //this route will 403 if accessed via HTTP
+
+  return res.send('HTTPS only.');
+});
+
+function allow301 (req, res, next) {
+  res.locals.enable301Redirects = true;
+}
+
+app.get('/allow', allow301, forceSSL, function (req, res) {
+
+  return res.send('HTTP or HTTPS');
+});
+
+```
+
+
 
 Examples
 ========
@@ -100,6 +153,8 @@ npm test
 
 Change Log
 ==========
+**v0.3.0** - Added additional configuration options, ability to add per route configuration options
+
 **v0.2.13** - Bug Fix, thanks @tatepostnikoff
 
 **v0.2.12** - Bug Fix
