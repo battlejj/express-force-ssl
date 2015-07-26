@@ -5,13 +5,23 @@ var bodyParser = require('body-parser')
   , http = require('http')
   , https = require('https')
   ;
-module.exports = (function() {
+
+module.exports = function (options) {
   var ssl_options = {
     key: fs.readFileSync('./test/keys/localhost.key'),
     cert: fs.readFileSync('./test/keys/localhost.crt')
   };
 
+  options = options || {};
+
+  var httpPort = options.httpPort || 8080;
+  var httpsPort = options.httpsPort || 8443;
+
+  delete options.httpPort;
+  delete options.httpsPort;
+
   var app = express();
+  app.set('forceSSLOptions', options);
 
   /*
    Allow for testing with POSTing of data
@@ -47,15 +57,24 @@ module.exports = (function() {
     res.json(req.body);
   });
 
-  app.set('httpsPort', 8443);
+  app.get('/override', function (req, res, next) {
+    res.locals['enable301Redirects'] = false;
+    next();
+  }, forceSSL, function (req, res) {
+    res.json(req.body);
+  });
 
-  secureServer.listen(8443);
-  server.listen(8080);
+  app.set('httpsPort', httpsPort);
+  secureServer.listen(httpsPort);
+  server.listen(httpPort);
 
   return {
     secureServer: secureServer,
     server: server,
-    app: app
+    app: app,
+    securePort: httpsPort,
+    port: httpPort,
+    options: options
   };
-})();
+};
 
