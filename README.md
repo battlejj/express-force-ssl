@@ -32,7 +32,7 @@ website. Changing this value to ***false*** will cause even GET requests to 403 
 could allow a client to spoof whether or not they were on HTTPS or not. This can be changed to ***true*** if you are
 behind a proxy where you trust the X-Forwarded-Proto header.
 
-**httpsPort** - Previous this value was set with app.set('httpsPort', <portNumber>). This value should now be set in
+**httpsPort** - Previous this value was set with app.set('httpsPort', :portNumber). This value should now be set in
 the forceSSLOptions setting.
 
 Per-Route SSL Settings are now possible
