@@ -15,7 +15,7 @@ Configuration
 As of v0.3.0 there are some configuration options
 -------------------------------------------------
 
-*NEW Settings Option*
+**NEW Settings Option**
 ```javascript
 app.set('forceSSLOptions', {
   enable301Redirects: true,
@@ -25,14 +25,14 @@ app.set('forceSSLOptions', {
 ```
 
 
-*enable301Redirects* - Defaults to ***true*** - the normal behavior is to 301 redirect GET requests to the https version of a
+**enable301Redirects** - Defaults to ***true*** - the normal behavior is to 301 redirect GET requests to the https version of a
 website. Changing this value to ***false*** will cause even GET requests to 403 SSL Required errors.
 
-*trustXFPHeader* - Defaults to ***false*** - this behavior is NEW and will be default NOT TRUST X-Forwarded-Proto which
+**trustXFPHeader** - Defaults to ***false*** - this behavior is NEW and will be default NOT TRUST X-Forwarded-Proto which
 could allow a client to spoof whether or not they were on HTTPS or not. This can be changed to ***true*** if you are
 behind a proxy where you trust the X-Forwarded-Proto header.
 
-*httpsPort* - Previous this value was set with app.set('httpsPort', <portNumber>). This value should now be set in
+**httpsPort** - Previous this value was set with app.set('httpsPort', <portNumber>). This value should now be set in
 the forceSSLOptions setting.
 
 Per-Route SSL Settings are now possible
@@ -53,6 +53,7 @@ app.get('/', forceSSL, function (req, res) {
 
 function allow301 (req, res, next) {
   res.locals.enable301Redirects = true;
+  next();
 }
 
 app.get('/allow', allow301, forceSSL, function (req, res) {
