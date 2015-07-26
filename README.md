@@ -47,7 +47,6 @@ app.set('forceSSLOptions', {
 
 app.get('/', forceSSL, function (req, res) {
   //this route will 403 if accessed via HTTP
-
   return res.send('HTTPS only.');
 });
 
@@ -57,7 +56,7 @@ function allow301 (req, res, next) {
 }
 
 app.get('/allow', allow301, forceSSL, function (req, res) {
-
+  //this route will NOT 403 if accessed via HTTP
   return res.send('HTTP or HTTPS');
 });
 
