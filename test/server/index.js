@@ -18,10 +18,8 @@ module.exports = function (options) {
   var httpsPort = options.httpsPort || 8443;
 
   delete options.httpPort;
-  delete options.httpsPort;
 
   var app = express();
-  app.set('forceSSLOptions', options);
 
   /*
    Allow for testing with POSTing of data
@@ -46,7 +44,7 @@ module.exports = function (options) {
   app.get('/ssl/nested/route/:id', forceSSL, function (req, res) {
     var host = req.headers.host.split(':');
     var port = host.length > 1 ? host[1] : 'default port';
-    res.send('HTTPS Only. Port: ' + port + '. Got param of ' + req.param('id') + '.');
+    res.send('HTTPS Only. Port: ' + port + '. Got param of ' + req.params.id + '.');
   });
 
   app.post('/echo', function (req, res) {
@@ -64,7 +62,9 @@ module.exports = function (options) {
     res.json(req.body);
   });
 
-  app.set('httpsPort', httpsPort);
+  //Old Usage
+  //app.set('httpsPort', httpsPort);
+  app.set('forceSSLOptions', options);
   secureServer.listen(httpsPort);
   server.listen(httpPort);
 
