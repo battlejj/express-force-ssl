@@ -5,11 +5,19 @@ var bodyParser = require('body-parser')
   , http = require('http')
   , https = require('https')
   ;
-module.exports = (function() {
+
+module.exports = function (options) {
   var ssl_options = {
     key: fs.readFileSync('./test/keys/localhost.key'),
     cert: fs.readFileSync('./test/keys/localhost.crt')
   };
+
+  options = options || {};
+
+  var httpPort = options.httpPort || 8080;
+  var httpsPort = options.httpsPort || 8443;
+
+  delete options.httpPort;
 
   var app = express();
 
@@ -36,7 +44,7 @@ module.exports = (function() {
   app.get('/ssl/nested/route/:id', forceSSL, function (req, res) {
     var host = req.headers.host.split(':');
     var port = host.length > 1 ? host[1] : 'default port';
-    res.send('HTTPS Only. Port: ' + port + '. Got param of ' + req.param('id') + '.');
+    res.send('HTTPS Only. Port: ' + port + '. Got param of ' + req.params.id + '.');
   });
 
   app.post('/echo', function (req, res) {
@@ -47,15 +55,28 @@ module.exports = (function() {
     res.json(req.body);
   });
 
-  app.set('httpsPort', 8443);
+  app.get('/override', function (req, res, next) {
+    res.locals.forceSSLOptions = {
+      enable301Redirects: false
+    };
+    next();
+  }, forceSSL, function (req, res) {
+    res.json(req.body);
+  });
 
-  secureServer.listen(8443);
-  server.listen(8080);
+  //Old Usage
+  //app.set('httpsPort', httpsPort);
+  app.set('forceSSLOptions', options);
+  secureServer.listen(httpsPort);
+  server.listen(httpPort);
 
   return {
     secureServer: secureServer,
     server: server,
-    app: app
+    app: app,
+    securePort: httpsPort,
+    port: httpPort,
+    options: options
   };
-})();
+};
 

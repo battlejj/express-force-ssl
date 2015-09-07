@@ -2,7 +2,7 @@
   "author": "Jeremy Battle <@complexcarb> (http://jeremybattle.com)",
   "name": "express-force-ssl",
   "description": "Force SSL on particular/all pages in Express",
-  "version": "0.2.13",
+  "version": "0.3.0",
   "scripts": {
     "test": "mocha test"
   },
@@ -23,7 +23,9 @@
     "https",
     "express"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "lodash.assign": "^3.2.0"
+  },
   "main": "index",
   "bugs": {
     "url": "http://github.com/battlejj/express-force-ssl/issues"

@@ -1,12 +1,19 @@
 var chai = require('chai')
   , expect = chai.expect
   , request = require('request')
-  , server = require('./server')
+  , server
+  , baseurl
+  , secureBaseurl
+  , SSLRequiredErrorText
   ;
 
-var baseurl = 'http://localhost:8080';
-var secureBaseurl = 'https://localhost:8443';
-var SSLRequiredErrorText = 'SSL Required.';
+
+before(function () {
+  server = require('./server')({ httpPort: 8080, httpsPort: 8443 });
+  baseurl = 'http://localhost:' + server.port;
+  secureBaseurl = 'https://localhost:' + server.securePort;
+  SSLRequiredErrorText = 'SSL Required.';
+});
 
 describe('Test standard HTTP behavior.', function(){
 
