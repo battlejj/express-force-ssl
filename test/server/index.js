@@ -56,7 +56,9 @@ module.exports = function (options) {
   });
 
   app.get('/override', function (req, res, next) {
-    res.locals['enable301Redirects'] = false;
+    res.locals.forceSSLOptions = {
+      enable301Redirects: false
+    };
     next();
   }, forceSSL, function (req, res) {
     res.json(req.body);

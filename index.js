@@ -38,7 +38,7 @@ module.exports = function(req, res, next){
   var redirect;
   var secure;
   var xfpHeader = req.get('X-Forwarded-Proto');
-  var localHttpsPort = res.locals['httpsPort'];
+  var localHttpsPort;
   var appHttpsPort = req.app.get('httpsPort');
   var httpsPort;
   var fullUrl;
@@ -52,8 +52,8 @@ module.exports = function(req, res, next){
   };
 
   var expressOptions = req.app.get('forceSSLOptions') || {};
-  var localOptions = res.locals;
-
+  var localOptions = res.locals.forceSSLOptions || {};
+  localHttpsPort = localOptions.httpsPort;
   assign(options, expressOptions, localOptions);
 
   secure = isSecure(req.secure, xfpHeader, options.trustXFPHeader);
@@ -74,6 +74,7 @@ module.exports = function(req, res, next){
       res.status(403).send(options.sslRequiredMessage);
     }
   } else {
+    delete res.locals.forceSSLOptions;
     next();
   }
 };
