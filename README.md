@@ -161,6 +161,7 @@ npm test
 Change Log
 ==========
 **v0.3.1** - Updated README to remove deprecated usage and fix some typos. Thanks @Alfredo-Delgado and @glennr
+
 **v0.3.0** - Added additional configuration options, ability to add per route configuration options
 
 **v0.2.13** - Bug Fix, thanks @tatepostnikoff
