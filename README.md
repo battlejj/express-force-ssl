@@ -81,8 +81,8 @@ var http = require('http');
 var https = require('https');
 
 var ssl_options = {
-  key: fs.readFileSync('./keys/private.key')
-  cert: fs.readFileSync('./keys/cert.crt')
+  key: fs.readFileSync('./keys/private.key'),
+  cert: fs.readFileSync('./keys/cert.crt'),
   ca: fs.readFileSync('./keys/intermediate.crt')
 };
 
@@ -193,6 +193,7 @@ Courtesy of @tixz
 For example, if you host your non-ssl site on port 8080 and your secure site on 8443, version 0.1.x did not support it.
 Now, out of the box your non-ssl site port will be recognized, and to specify a port other than 443 for your ssl port
 you just have to add a setting in your express config like so:
+**Update, this method of setting httpsPort is deprecated as of v 0.3.0**
 
 ````javascript
 app.set('httpsPort', 8443);
