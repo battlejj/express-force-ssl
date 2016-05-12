@@ -55,7 +55,7 @@ app.get('/', forceSSL, function (req, res) {
 
 function allow301 (req, res, next) {
   res.locals.forceSSLOptions = {
-    enable301Redirects: true;
+    enable301Redirects: true
   };
   next();
 }
