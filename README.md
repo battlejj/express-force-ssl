@@ -133,7 +133,7 @@ server.listen(80)
 
 Custom Server Port Support
 --------------------------
-If your server isn't listening on 80/443 respectively, you can change this pretty simply. 
+If your server isn't listening on 80/443 respectively, you can change this pretty simply.
 
 ```javascript
 
@@ -160,6 +160,8 @@ npm test
 
 Change Log
 ==========
+**v0.3.2** - Updated README to remove typo. Thanks @gswalden
+
 **v0.3.1** - Updated README to remove deprecated usage and fix some typos. Thanks @Alfredo-Delgado and @glennr
 
 **v0.3.0** - Added additional configuration options, ability to add per route configuration options
