@@ -1,5 +1,4 @@
 var parseUrl = require('url').parse;
-var assign = require('lodash.assign');
 
 function isSecure (secure, xfpHeader, trustXFPHeader) {
   xfpHeader = xfpHeader ? xfpHeader.toString().toLowerCase() : '';
@@ -54,7 +53,7 @@ module.exports = function(req, res, next){
   var expressOptions = req.app.get('forceSSLOptions') || {};
   var localOptions = res.locals.forceSSLOptions || {};
   localHttpsPort = localOptions.httpsPort;
-  assign(options, expressOptions, localOptions);
+  Object.assign(options, expressOptions, localOptions);
 
   secure = isSecure(req.secure, xfpHeader, options.trustXFPHeader);
   redirect = shouldRedirect(options.enable301Redirects, req.method);
