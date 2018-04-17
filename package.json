@@ -23,15 +23,12 @@
     "https",
     "express"
   ],
-  "dependencies": {
-    "lodash.assign": "^3.2.0"
-  },
   "main": "index",
   "bugs": {
     "url": "http://github.com/battlejj/express-force-ssl/issues"
   },
   "engines": {
-    "node": ">=0.2.2"
+    "node": ">=6.11"
   },
   "licenses": [
     {
