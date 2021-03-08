@@ -48,7 +48,8 @@ module.exports = function(req, res, next){
     trustXFPHeader: false,
     enable301Redirects: true,
     httpsPort: false,
-    sslRequiredMessage: 'SSL Required.'
+    sslRequiredMessage: 'SSL Required.',
+    XPoweredByHeader: 'Express'
   };
 
   var expressOptions = req.app.get('forceSSLOptions') || {};
@@ -69,7 +70,7 @@ module.exports = function(req, res, next){
       //intentionally allow coercion of https port
       redirectUrl = 'https://' + fullUrl.hostname + (httpsPort == 443 ? '' : (':' + httpsPort)) + req.originalUrl;
 
-      res.redirect(301, redirectUrl);
+      res.header({'X-Powered-By': options.XPoweredByHeader}).redirect(301, redirectUrl);
     } else {
       res.status(403).send(options.sslRequiredMessage);
     }
